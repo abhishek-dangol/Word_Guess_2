@@ -35,29 +35,27 @@ const HomeScreen = () => {
   console.log("Selected categories: ", selectedCategories);
 
   return (
-    <View style={styles.buttonsContainer}>
-      <View style={styles.categoriesContainer}>
-        <View style={styles.categoriesText}>
-          <Text>Selected Categories: </Text>
-          {selectedCategories.map((category) => (
-            <Text key={category}>{category}</Text>
-          ))}
-        </View>
+        <View style={styles.buttonsContainer}>
+          <View>
+            <Text>Selected Categories: </Text>
+            {selectedCategories.map((category) => (
+              <Text key={category}>{category}</Text>
+            ))}
+          </View>
+          <AppButton title="Select Categories" color="teal" onPress={handleOpenSelecteCategoriesModal}/>
+          <AppButton title="Start Game" color="green" />
+          <AppButton title="Game Setup" color="yellow" onPress={handleOpenGameSetupModal}/>
+          <CategorySelector
+            visible={isSelectCategoriesModalVisible}
+            onClose={handleCloseSelectCategoriesModal}
+            selectedCategoriesProp={selectedCategories}
+            onSelectCategories={handleSelectCategories}
+            />
+          <GameSetup
+            visible={isGameSetupModalVisible}
+            onClose={handleCloseGameSetupModal}
+            />
       </View>
-      <AppButton title="Select Categories" color="teal" onPress={handleOpenSelecteCategoriesModal}/>
-      <AppButton title="Start Game" color="green" />
-      <AppButton title="Game Setup" color="yellow" onPress={handleOpenGameSetupModal}/>
-      <CategorySelector
-        visible={isSelectCategoriesModalVisible}
-        onClose={handleCloseSelectCategoriesModal}
-        selectedCategoriesProp={selectedCategories}
-        onSelectCategories={handleSelectCategories}
-      />
-      <GameSetup
-        visible={isGameSetupModalVisible}
-        onClose={handleCloseGameSetupModal}
-      />
-    </View>
   );
 };
 
@@ -71,20 +69,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
-  categoriesContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  categoriesText: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 20,
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    marginVertical: 5,
-    marginHorizontal: 5,
-    backgroundColor: colors.teal,
-    borderColor: colors.teal,
-  }
 });
