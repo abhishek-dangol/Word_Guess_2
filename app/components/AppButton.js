@@ -3,13 +3,14 @@ import React from "react";
 
 import colors from "../config/colors";
 
-const AppButton = ({ title, onPress, color }) => {
+const AppButton = ({ title, onPress, color = colors.green, disabled = false }) => {
   return (
     <TouchableOpacity
-      style={[styles.button, { backgroundColor: colors[color] }]}
+      style={[styles.button, { backgroundColor: disabled ? colors.gray : colors[color] }, disabled && styles.disabledButton, ]}
       onPress={onPress}
+      disabled={disabled}
     >
-      <Text style={styles.text}>{title}</Text>
+      <Text style={[styles.text ]}>{title}</Text>
     </TouchableOpacity>
   );
 };
@@ -32,4 +33,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     fontWeight: "bold",
   },
+  disabledButton: {
+    opactiy: 0.6,
+  }
 });
