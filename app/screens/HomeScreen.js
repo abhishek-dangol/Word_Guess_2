@@ -13,10 +13,16 @@ const HomeScreen = () => {
 
   const [isSelectCategoriesModalVisible, setIsSelectCategoriesModalVisible] = useState(false);
   const [isGameSetupModalVisible, setIsGameSetupModalVisible] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState(["Food", "Geography"]);
+  const [selectedCategories, setSelectedCategories] = useState(["Food", "Geography", "Animals", "Music"]);
   const [selectedSet, setSelectedSet] = useState("setOne");
   const [selectedDuration, setSelectedDuration] = useState(10);
   const [selectedSkips, setSelectedSkips] = useState(2);
+  const [team1Name, setTeam1Name] = useState("");
+  const [team1Players, setTeam1Players] = useState(2);
+  const [team1PlayerNames, setTeam1PlayerName] = useState(["", ""]);
+  const [team2Name, setTeam2Name] = useState("");
+  const [team2Players, setTeam2Players] = useState(2);
+  const [team2PlayerNames, setTeam2PlayerNames] = useState(["", ""]);
 
 
   const toggleSelectCategoriesModal = () => {
@@ -28,10 +34,14 @@ const HomeScreen = () => {
   }
 
   const handleStartGame = () => {
+    if (!team1Name.trim() || !team2Name.trim()){
+      Alert.alert("Team names required!", "Please enter names for both teams.");
+      return;
+    }
     if (selectedCategories.length >= 2) {
       navigation.navigate("Game", { selectedCategories, selectedSet, selectedDuration, selectedSkips });
     } else {
-      Alert.alert("Selection Required", "Please select at least two categories to start the game.");
+      Alert.alert("Selection Required", "Please select at least four categories to start the game.");
     }
   };
 
