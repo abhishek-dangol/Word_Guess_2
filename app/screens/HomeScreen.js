@@ -14,30 +14,22 @@ const HomeScreen = () => {
   const [isSelectCategoriesModalVisible, setIsSelectCategoriesModalVisible] = useState(false);
   const [isGameSetupModalVisible, setIsGameSetupModalVisible] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState(["Food", "Geography"]);
+  const [selectedSet, setSelectedSet] = useState("setOne");
+  const [selectedDuration, setSelectedDuration] = useState(10);
+  const [selectedSkips, setSelectedSkips] = useState(2);
 
-  const handleOpenSelectCategoriesModal = () => {
-    setIsSelectCategoriesModalVisible(true);
-  };
 
-  const handleCloseSelectCategoriesModal = () => {
-    setIsSelectCategoriesModalVisible(false);
-  };
+  const toggleSelectCategoriesModal = () => {
+    setIsSelectCategoriesModalVisible(!isSelectCategoriesModalVisible);
+  }
 
-  const handleOpenGameSetupModal = () => {
-    setIsGameSetupModalVisible(true);
-  };
-
-  const handleCloseGameSetupModal = () => {
-    setIsGameSetupModalVisible(false);
-  };
-
-  const handleSelectCategories = (categories) => {
-    setSelectedCategories(categories);
-  };
+  const toggleGameSetupModal = () => {
+    setIsGameSetupModalVisible(!isGameSetupModalVisible);
+  }
 
   const handleStartGame = () => {
     if (selectedCategories.length >= 2) {
-      navigation.navigate("Game", { selectedCategories });
+      navigation.navigate("Game", { selectedCategories, selectedSet, selectedDuration, selectedSkips });
     } else {
       Alert.alert("Selection Required", "Please select at least two categories to start the game.");
     }
@@ -55,12 +47,22 @@ const HomeScreen = () => {
         ))}
       </View>
 
+      {/* For debugging */}
+      <Text style={styles.selectedCategoriesContainer}>Selected Set: {selectedSet}</Text>
+      <Text style={styles.selectedCategoriesContainer}>Selected Duration: {selectedDuration}</Text>
+      <Text style={styles.selectedCategoriesContainer}>Selected Skips: {selectedSkips}</Text>
+
       {/* Buttons */}
       <View style={styles.buttonsContainer}>
         <AppButton 
           title="Select Categories" 
           color="teal" 
-          onPress={handleOpenSelectCategoriesModal}
+          onPress={toggleSelectCategoriesModal}
+        />
+        <AppButton 
+          title="Game Setup" 
+          color="yellow" 
+          onPress={toggleGameSetupModal}
         />
         <AppButton 
           title="Start Game" 
@@ -68,23 +70,25 @@ const HomeScreen = () => {
           onPress={handleStartGame} 
           disabled={selectedCategories.length < 2} 
         />
-        <AppButton 
-          title="Game Setup" 
-          color="yellow" 
-          onPress={handleOpenGameSetupModal}
-        />
       </View>
 
       {/* Modals */}
       <CategorySelector
         visible={isSelectCategoriesModalVisible}
-        onClose={handleCloseSelectCategoriesModal}
-        selectedCategoriesProp={selectedCategories}
-        onSelectCategories={handleSelectCategories}
+        onClose={toggleSelectCategoriesModal}
+        selectedCategories={selectedCategories}
+        onSelectCategories={(category) => setSelectedCategories(category)}
       />
       <GameSetup
         visible={isGameSetupModalVisible}
-        onClose={handleCloseGameSetupModal}
+        onClose={toggleGameSetupModal}
+        onDurationChange={(duration) => setSelectedDuration(duration)}
+        onSkipChange={(skip) => setSelectedSkips(skip)}
+        onSetChange={(set) => setSelectedSet(set)}
+        selectedSet={selectedSet}
+        selectedDuration={selectedDuration}
+        selectedSkips={selectedSkips}
+
       />
     </View>
   );

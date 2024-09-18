@@ -1,12 +1,10 @@
-// app/screens/GameScreen.js
-
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import AppButton from "../components/AppButton";
 import colors from "../config/colors";
 
 const GameScreen = ({ route, navigation }) => {
-  const { selectedCategories = [] } = route.params || {}; // Safeguard against undefined params
+  const { selectedCategories = [], selectedSet, selectedDuration, selectedSkips } = route.params || {}; // Safeguard against undefined params
 
   console.log("Received selected categories in GameScreen: ", selectedCategories);
 
@@ -25,7 +23,9 @@ const GameScreen = ({ route, navigation }) => {
       ) : (
         <Text>No categories selected.</Text>
       )}
-      {/* Add more game-related components here */}
+      <Text>Selected Set: {selectedSet} </Text>
+      <Text>Selected Duration: {selectedDuration} </Text>
+      <Text>Selected Skips: {selectedSkips}</Text>
       <AppButton 
         title="Back to Home" 
         color="red" 

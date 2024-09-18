@@ -7,10 +7,10 @@ import colors from '../config/colors';
 const CategorySelector = ({ 
     visible, 
     onClose, 
-    selectedCategoriesProp = ["Food", "Geography"], 
+    selectedCategories = ["Food", "Geography"], 
     onSelectCategories /* callback to pass selected categories back to parent */ }) => {
 
- const [modalSelectedCategories, setModalSelectedCategories] = useState(selectedCategoriesProp);
+ const [modalSelectedCategories, setModalSelectedCategories] = useState(selectedCategories);
 
  const categories = [
     "Food", "Hollywood", "Bollywood", "Geography", "Politics", "History", "Arts", "Music"
@@ -28,9 +28,9 @@ const CategorySelector = ({
 
  useEffect(() => {
     if (visible){
-        setModalSelectedCategories(selectedCategoriesProp.length > 0 ? selectedCategoriesProp : ["Food", "Geography"]);
+        setModalSelectedCategories(selectedCategories.length > 0 ? selectedCategories : ["Food", "Geography"]);
     }
- }, [visible, selectedCategoriesProp]);
+ }, [visible, selectedCategories]);
 
  const handleDone = () => {
     if (onSelectCategories){
