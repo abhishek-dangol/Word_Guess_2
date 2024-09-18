@@ -7,13 +7,13 @@ import colors from '../config/colors';
 const CategorySelector = ({ 
     visible, 
     onClose, 
-    selectedCategories = ["Food", "Geography"], 
+    selectedCategories = ["Food", "Geography", "Animals", "Music"], 
     onSelectCategories /* callback to pass selected categories back to parent */ }) => {
 
  const [modalSelectedCategories, setModalSelectedCategories] = useState(selectedCategories);
 
  const categories = [
-    "Food", "Hollywood", "Bollywood", "Geography", "Politics", "History", "Arts", "Music"
+    "Food", "Hollywood", "Bollywood", "Geography", "Politics", "History", "Arts", "Music", "Animals", "Sports", "Brands"
  ]
 
  const toggleCategory = (category) => {
@@ -28,7 +28,7 @@ const CategorySelector = ({
 
  useEffect(() => {
     if (visible){
-        setModalSelectedCategories(selectedCategories.length > 0 ? selectedCategories : ["Food", "Geography"]);
+        setModalSelectedCategories(selectedCategories.length > 0 ? selectedCategories : ["Food", "Geography", "Animals", "Music"]);
     }
  }, [visible, selectedCategories]);
 
@@ -39,7 +39,7 @@ const CategorySelector = ({
     onClose();
  }
 
- const isDoneDisabled = modalSelectedCategories.length < 2;
+ const isDoneDisabled = modalSelectedCategories.length < 4;
 
  // console.log(modalSelectedCategories);
 
@@ -51,7 +51,7 @@ const CategorySelector = ({
     >
         <View style={styles.modalOverlay}>
             <View style={styles.modalContainer}>
-                <Text style={styles.title}>Select At Least Two Categories: </Text>
+                <Text style={styles.title}>Select At Least Four Categories: </Text>
                 <ScrollView contentContainerStyle={styles.categoriesContainer}>
                     {categories.map((category) => (
                         <Pressable
@@ -72,7 +72,7 @@ const CategorySelector = ({
                 <AppButton title="Done" color={isDoneDisabled ? colors.gray : colors.green} onPress={handleDone} disabled={isDoneDisabled}/>
                 {isDoneDisabled && (
                     <Text style={styles.warningText}>
-                        Please select at least two categories
+                        Please select at least four categories
                     </Text>
                 )}
             </View>
